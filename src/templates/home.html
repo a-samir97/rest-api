@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chart</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class='container'>
+    <h1 class='text-center'>Charts</h1>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
+
+
+    <div class='row'>
+        <div class="col-md-5">
+                <canvas id="myChart" width="200" height="200"></canvas>
+        <script>            
+                var listCountries = [];
+                var listCategories = [];
+                $.ajax({
+                    method:"GET",
+                    url:'api-data/',
+                    success:function(data)
+                    {
+                        listCountries = data.list_country;
+                        listCategories = data.list_category;
+                        var ctx = document.getElementById('myChart').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: listCountries,
+                        datasets: [{
+                            label: 'Sports',
+                            data: [data.usa_sports_counter, data.egy_sports_counter],
+                            backgroundColor: [
+                            '#36a2eb',
+                            '#ff6384',
+                            ],
+                            borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)',
+
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+
+                    },
+                    error:function(err_data)
+                    {
+                        console.log("error");
+                        console.log(err_data);
+                    }
+                })
+            // to make chart 
+        
+        </script>
+    </div> 
+
+    <div class="col-md-5 offset-md-2">
+            <canvas id="myChart2" width="200" height="200"></canvas>
+            <script>            
+                    var listCountries2 = [];
+                    var listCategories2 = [];
+                // to make chart
+                $.ajax({
+                    method:"GET",
+                    url:'api-data/',
+                    success:function(data)
+                    { 
+                        listCountries2 = data.list_country;
+                        listCategories2 = data.list_category;
+                    var ctx2 = document.getElementById('myChart2').getContext('2d');
+                    var myChart = new Chart(ctx2, {
+                        type: 'bar',
+                        data: {
+                            labels: listCountries2,
+                            datasets: [{
+                                label: 'Technology',
+                                data: [data.usa_tech_counter, data.egy_tech_counter],
+                                backgroundColor: [
+                                '#ff6384',
+                                '#36a2eb',
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });},
+                    error:function(err)
+                    {
+                        console.log(err)
+                    }
+                });
+            </script>
+        </div> 
+    </div>       
+
+</div>
+</body>
+</html>
